@@ -1,6 +1,7 @@
 import 'package:bmi_calcutor/inputpage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:meta/meta.dart';
 
 int height = 180;
 
@@ -8,6 +9,7 @@ enum gender {
   male,
   female,
 }
+
 
 const inactivecolor = Color(0xFF1D1F33);
 const activecolor = Color(0xFF151228);
@@ -67,7 +69,7 @@ class _BMIState extends State<calculator> {
                 child:  box(
                     tag:Icon(
                       FontAwesomeIcons.mars,
-                      size: 150,
+                      size: 100,
                     ),
                      write: 'MALE',
                     rang: malecard
@@ -84,7 +86,7 @@ class _BMIState extends State<calculator> {
                 child: box(
                     tag: Icon(
                       FontAwesomeIcons.venus,
-                      size: 150,
+                      size: 100,
                     ),
                     write: 'FEMALE',
                      rang:femalecard,
@@ -96,7 +98,7 @@ class _BMIState extends State<calculator> {
             children: [
               Expanded(
                 child: box(
-                  tag:Icon(FontAwesomeIcons.mars),
+
                  write: 'HEIGHT        $height',
                   rang:inactivecolor,
                   wid: SliderTheme(
@@ -130,11 +132,11 @@ class _BMIState extends State<calculator> {
           Row(
             children: [
               Expanded(
-                  child: box(tag:Icon(FontAwesomeIcons.mars), write: 'WEIGHT', rang:inactivecolor,
-                     btn: btn(FontAwesomeIcons.plus)),),
+                  child: box( write: 'WEIGHT', rang:inactivecolor,
+                     buton: btn(icon :FontAwesomeIcons.plus, hit: 56,wdh: 56,s: 30,),buton1: btn(icon: FontAwesomeIcons.minus, hit: 56,wdh: 56,s: 30,)),),
               Expanded(
-                  child: box(tag: Icon(FontAwesomeIcons.mars), write: 'HEIGHT',
-                      rang:inactivecolor, btn:btn(FontAwesomeIcons.plus)),),
+                  child: box( write: 'HEIGHT',
+                      rang:inactivecolor, buton:btn(icon: FontAwesomeIcons.plus, hit: 56,wdh: 56,s: 30,),buton1: btn(icon: FontAwesomeIcons.minus, hit: 56,wdh: 56,s: 30,),),),
             ],
           ),
         ],
@@ -145,16 +147,18 @@ class _BMIState extends State<calculator> {
 
 class box extends StatelessWidget {
   //box(this.tag, this.write, this.rang, this.wid,btn,);
- const  box({ this.tag,  this.write,  this.rang,  this.wid,btn});
+ const  box({ required this.write, this.tag=const Icon(Icons.mic_none_sharp, size: 0,),  this.rang=Colors.transparent,  this.wid =const SizedBox(height: 2,) , this.buton= const btn( icon: FontAwesomeIcons.plus, hit: 0, wdh: 0,s: 0,),this.buton1= const btn( icon: FontAwesomeIcons.plus, hit: 0, wdh: 0,s: 0,)});
 
-  final  Icon? tag;
-  final String? write;
-  final Color? rang;
-  final Widget? wid;
+  final  Icon tag;
+  final String write;
+  final Color rang;
+  final Widget wid;
+  final btn buton;
+  final btn buton1;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: 190,
       width: 100,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -170,20 +174,31 @@ class box extends StatelessWidget {
             write,
             style: TextStyle(fontSize: 30),
           ),
-          wid
+          wid,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buton,buton1
+            ],
+          )
         ],
       ),
     );
   }
 }
+
+
 class btn extends StatelessWidget {
- btn(this.icon);
- final IconData? icon;
+  const btn({required this.icon, required this.hit,required this.wdh , required this.s});
+  final IconData? icon;
+  final double hit;
+  final double wdh;
+  final double s;
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(onPressed:(){},shape: CircleBorder(),fillColor:Color(0xFF4C4F5E),constraints: BoxConstraints.tightFor(
-      height: 56,width: 56
-    ),elevation: 6.0,child: Icon(icon),);
+        height: hit,width: wdh
+    ),elevation: 6.0,child: Icon(icon,size: s,),);
   }
 }
-
