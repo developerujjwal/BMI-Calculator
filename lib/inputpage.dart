@@ -71,7 +71,7 @@ class _BMIState extends State<calculator> {
                     ),
                     'MALE',
                     malecard,
-                    SizedBox()),
+                    SizedBox(),btn(fo)),
               )),
               Expanded(
                   child: GestureDetector(
@@ -130,11 +130,11 @@ class _BMIState extends State<calculator> {
           Row(
             children: [
               Expanded(
-                  child: box(Icon(FontAwesomeIcons.mars), 'jgbj', inactivecolor,
-                      SizedBox())),
+                  child: box(Icon(FontAwesomeIcons.mars), 'WEIGHT', inactivecolor,
+                      SizedBox(),btn(FontAwesomeIcons.plus)),),
               Expanded(
-                  child: box(Icon(FontAwesomeIcons.mars), 'ukjhcdb',
-                      inactivecolor, SizedBox())),
+                  child: box(Icon(FontAwesomeIcons.mars), 'HEIGHT',
+                      inactivecolor, SizedBox(),btn(FontAwesomeIcons.plus)),),
             ],
           ),
         ],
@@ -144,7 +144,7 @@ class _BMIState extends State<calculator> {
 }
 
 class box extends StatelessWidget {
-  box(this.tag, this.write, this.rang, this.wid);
+  box(this.tag, this.write, this.rang, this.wid,btn,);
   final Icon tag;
   final String write;
   final Color rang;
@@ -174,3 +174,14 @@ class box extends StatelessWidget {
     );
   }
 }
+class btn extends StatelessWidget {
+ btn(this.icon);
+ final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(onPressed:(){},shape: CircleBorder(),fillColor:Color(0xFF4C4F5E),constraints: BoxConstraints.tightFor(
+      height: 56,width: 56
+    ),elevation: 6.0,child: Icon(icon),);
+  }
+}
+
