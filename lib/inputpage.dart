@@ -64,14 +64,14 @@ class _BMIState extends State<calculator> {
                     ujj(gender.male);
                   });
                 },
-                child: box(
-                    Icon(
+                child:  box(
+                    tag:Icon(
                       FontAwesomeIcons.mars,
                       size: 150,
                     ),
-                    'MALE',
-                    malecard,
-                    SizedBox(),btn(fo)),
+                     write: 'MALE',
+                    rang: malecard
+                    ),
               )),
               Expanded(
                   child: GestureDetector(
@@ -82,13 +82,13 @@ class _BMIState extends State<calculator> {
                   });
                 },
                 child: box(
-                    Icon(
+                    tag: Icon(
                       FontAwesomeIcons.venus,
                       size: 150,
                     ),
-                    'FEMALE',
-                    femalecard,
-                    SizedBox()),
+                    write: 'FEMALE',
+                     rang:femalecard,
+                    ),
               )),
             ],
           ),
@@ -96,10 +96,10 @@ class _BMIState extends State<calculator> {
             children: [
               Expanded(
                 child: box(
-                  Icon(FontAwesomeIcons.mars),
-                  'HEIGHT        $height',
-                  inactivecolor,
-                  SliderTheme(
+                  tag:Icon(FontAwesomeIcons.mars),
+                 write: 'HEIGHT        $height',
+                  rang:inactivecolor,
+                  wid: SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                       inactiveTrackColor: Color(0xFF8D8E98),
                       activeTrackColor: Colors.white,
@@ -130,11 +130,11 @@ class _BMIState extends State<calculator> {
           Row(
             children: [
               Expanded(
-                  child: box(Icon(FontAwesomeIcons.mars), 'WEIGHT', inactivecolor,
-                      SizedBox(),btn(FontAwesomeIcons.plus)),),
+                  child: box(tag:Icon(FontAwesomeIcons.mars), write: 'WEIGHT', rang:inactivecolor,
+                     btn: btn(FontAwesomeIcons.plus)),),
               Expanded(
-                  child: box(Icon(FontAwesomeIcons.mars), 'HEIGHT',
-                      inactivecolor, SizedBox(),btn(FontAwesomeIcons.plus)),),
+                  child: box(tag: Icon(FontAwesomeIcons.mars), write: 'HEIGHT',
+                      rang:inactivecolor, btn:btn(FontAwesomeIcons.plus)),),
             ],
           ),
         ],
@@ -144,11 +144,13 @@ class _BMIState extends State<calculator> {
 }
 
 class box extends StatelessWidget {
-  box(this.tag, this.write, this.rang, this.wid,btn,);
-  final Icon tag;
-  final String write;
-  final Color rang;
-  final Widget wid;
+  //box(this.tag, this.write, this.rang, this.wid,btn,);
+ const  box({ this.tag,  this.write,  this.rang,  this.wid,btn});
+
+  final  Icon? tag;
+  final String? write;
+  final Color? rang;
+  final Widget? wid;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -176,7 +178,7 @@ class box extends StatelessWidget {
 }
 class btn extends StatelessWidget {
  btn(this.icon);
- final IconData icon;
+ final IconData? icon;
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(onPressed:(){},shape: CircleBorder(),fillColor:Color(0xFF4C4F5E),constraints: BoxConstraints.tightFor(
