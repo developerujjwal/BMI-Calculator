@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meta/meta.dart';
 import 'result screen.dart';
-
+import 'calculator_brain.dart';
+int weight = 100;
 int height = 180;
+int age =22;
 
 enum gender {
   male,
@@ -55,7 +57,6 @@ class _BMIState extends State<calculator> {
         title: Text('BMI Calculator'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
@@ -71,9 +72,9 @@ class _BMIState extends State<calculator> {
                 child: box(
                     tag: Icon(
                       FontAwesomeIcons.mars,
-                      size: 100,
+                      size: 80,
                     ),
-                    write: 'MALE',
+                    write: Text('MALE'),
                     rang: malecard),
               )),
               Expanded(
@@ -87,9 +88,9 @@ class _BMIState extends State<calculator> {
                 child: box(
                   tag: Icon(
                     FontAwesomeIcons.venus,
-                    size: 100,
+                    size: 80,
                   ),
-                  write: 'FEMALE',
+                  write: Text('FEMALE'),
                   rang: femalecard,
                 ),
               )),
@@ -99,7 +100,7 @@ class _BMIState extends State<calculator> {
             children: [
               Expanded(
                 child: box(
-                  write: 'HEIGHT        $height',
+                  write: Text('HEIGHT'), mc: Text('cm'),hei: Text('$height',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold)),
                   rang: inactivecolor,
                   wid: SliderTheme(
                     data: SliderTheme.of(context).copyWith(
@@ -133,9 +134,10 @@ class _BMIState extends State<calculator> {
             children: [
               Expanded(
                 child: box(
-                    write: 'WEIGHT',
+                    write: Text('WEIGHT'),
                     rang: inactivecolor,
                     buton: btn(
+                      check_icon: 1,
                       icon: FontAwesomeIcons.plus,
                       hit: 56,
                       wdh: 56,
@@ -146,32 +148,41 @@ class _BMIState extends State<calculator> {
                       hit: 56,
                       wdh: 56,
                       s: 30,
-                    )),
+                      check_icon: 0,
+                    ),wei: Text(weight.toString(),style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold))),
               ),
               Expanded(
                 child: box(
-                  write: 'HEIGHT',
+                  write: Text('AGE'),
                   rang: inactivecolor,
                   buton: btn(
                     icon: FontAwesomeIcons.plus,
                     hit: 56,
                     wdh: 56,
                     s: 30,
+                    check_icon: 11,
                   ),
                   buton1: btn(
                     icon: FontAwesomeIcons.minus,
                     hit: 56,
                     wdh: 56,
                     s: 30,
+                    check_icon:00 ,
                   ),
+                  ega: Text(age.toString(),style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
                 ),
               ),
             ],
           ),
           GestureDetector(
             onTap: () {
+              calculatorbrain cal=calculatorbrain(height:height,weight:weight);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => result()));
+                  context, MaterialPageRoute(builder: (context) => result(
+                bmiresult: cal.brain(),
+                massageinfo: cal.message_(),
+                resultcal: cal.result_(),
+              )));
             },
             child: Container(
               color: Colors.pink,
@@ -207,24 +218,34 @@ class box extends StatelessWidget {
         hit: 0,
         wdh: 0,
         s: 0,
+        check_icon: 55,
       ),
       this.buton1 = const btn(
         icon: FontAwesomeIcons.plus,
         hit: 0,
         wdh: 0,
         s: 0,
-      )});
+        check_icon: 55,
+      ),
+      this.ega = const Text('  '),
+      this.wei = const Text(' '),
+      this.hei = const Text(' '),
+      this.mc = const Text(' ')});
 
   final Icon tag;
-  final String write;
+  final Widget write;
   final Color rang;
   final Widget wid;
   final btn buton;
   final btn buton1;
+  final Widget wei;
+  final Widget ega;
+  final Widget hei;
+  final Widget mc;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 190,
+      height: 210,
       width: 100,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -233,13 +254,11 @@ class box extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           tag,
-          Text(
-            write,
-            style: TextStyle(fontSize: 30),
-          ),
+         write,
+          Row(children: [hei,mc]),wei,ega,
           wid,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -257,15 +276,31 @@ class btn extends StatelessWidget {
       {required this.icon,
       required this.hit,
       required this.wdh,
-      required this.s});
+      required this.s,
+      required this.check_icon,});
   final IconData? icon;
   final double hit;
   final double wdh;
   final double s;
+  final int check_icon;
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        if (check_icon==0){
+          weight--;
+        }
+        else if (check_icon==1){
+          weight++;
+        }
+      else if (check_icon==00){
+        age--;
+        }
+      else if (check_icon==11){
+        age++;
+        }
+        }
+      ,
       shape: CircleBorder(),
       fillColor: Color(0xFF4C4F5E),
       constraints: BoxConstraints.tightFor(height: hit, width: wdh),
